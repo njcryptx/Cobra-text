@@ -1,1 +1,65 @@
 #!/usr/bin/python3
+
+import argparse
+from stealthtext import encrypt, decrypt
+
+class Color:
+    CYAN = '\033[96m'
+    GREEN = '\033[92m'
+    RED = '\033[91m'
+    YELLOW = '\033[93m'
+    RESET = '\033[0m'
+
+def print_banner():
+    banner = f"""
+    {Color.CYAN}========================
+          Cobra-Text
+    ========================
+    {Color.RESET}Securely encrypt and decrypt your messages with ease.
+    """
+    print(banner)
+
+def encrypt_message(message, password):
+    encrypted_message = encrypt(message, password)
+    print(f'{Color.GREEN}Encrypted Message: {Color.RESET}{encrypted_message}')
+
+def decrypt_message(encrypted_message, password):
+    try:
+        decrypted_message = decrypt(encrypted_message, password)
+        print(f'{Color.GREEN}Decrypted Message: {Color.RESET}{decrypted_message}')
+    except Exception as e:
+        print(f'{Color.RED}Decryption failed: {Color.RESET}{e}')
+
+def setup_parser():
+    parser = argparse.ArgumentParser(
+        description="Cobra-Text: A secure tool for encrypting and decrypting messages.",
+        epilog=f"{Color.YELLOW}Usage examples:\n"
+               f"{Color.GREEN}Cobra-Text --encrypt 'Hello, world!' --password 'your_password'\n"
+               f"{Color.GREEN}Cobra-Text --decrypt 'your_encrypted_message_here' --password 'your_password'\n"
+               f"{Color.RESET}\n"
+               "Notes:\n"
+               "- Always use a strong password to enhance security.\n"
+               "- Keep your passwords confidential and never share them with others.\n"
+               "- Encrypted messages should be stored securely as they cannot be decrypted without the correct password."
+    )
+    
+    parser.add_argument('--encrypt', type=str, help='Message to encrypt. Ensure it is clear and concise.')
+    parser.add_argument('--decrypt', type=str, help='Encrypted message to decrypt. Must be a valid Base64 encoded string.')
+    parser.add_argument('--password', type=str, required=True, help='Password used for encryption/decryption. Must be kept secure.')
+
+    return parser
+
+def main():
+    print_banner()
+    parser = setup_parser()
+    args = parser.parse_args()
+
+    if args.encrypt:
+        encrypt_message(args.encrypt, args.password)
+    elif args.decrypt:
+        decrypt_message(args.decrypt, args.password)
+    else:
+        print(f'{Color.RED}No operation specified. Use --encrypt or --decrypt.{Color.RESET}')
+
+if __name__ == "__main__":
+    main()
