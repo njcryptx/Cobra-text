@@ -6,37 +6,39 @@ white="\e[97m"
 yellow="\e[33m"
 reset="\e[0m"
 
-echo -e "${yellow}Cobra-Text Installer${reset}"
-
-if [[ -d /usr/bin ]]; then
-    if [[ $(id -u) -ne 0 ]]; then
-        echo -e "${red}Error:${white} Root access is required. Please run with sudo or as root.${reset}"
-        exit 1
-    fi
-fi
-
-if [[ -d /usr/bin ]]; then
-    system="/usr/bin"
-elif [[ -d /data/data/com.termux/files/usr/bin ]]; then
-    system="/data/data/com.termux/files/usr/bin"
-else
-    echo -e "${red}Error:${white} Unsupported system environment. Exiting.${reset}"
+echo -e "${yellow}Cobra-Text Installation${reset}"
+sleep 3
+if [[ $(id -u) -ne 0 ]]; then
+    echo -e "${red}Error:${white} Root access is required. Please run with sudo or as root.${reset}"
     exit 1
 fi
 
+system="/usr/bin"
+
+echo -e "${white}Installing required package...${reset}"
+sleep 2
 pip install StealthText
-
-if mv bin/cobra-text "$system/cobra-text"; then
-    chmod +x "$system/cobra-text"
-    echo -e "${white}[${green}+${white}] ${green}File moved to $system and permissions set.${reset}"
+clear
+if python3 -c "import stealthtext" &>/dev/null; then
+    echo -e "${white}[${green}+${white}] ${green}StealthText package successfully installed.${reset}"
 else
-    echo -e "${white}[${red}✖${white}] ${red}Failed to move file. Please ensure cobra-text is in the current directory.${reset}"
+    echo -e "${white}[${red}✖${white}] ${red}Failed to install StealthText. Please check your Python and pip installation.${reset}"
     exit 1
 fi
+sleep 3
+clear
 
-if [[ $(command -v cobra-text) ]]; then
-    echo -e "${white}[${green}+${white}] ${green}Installation successful! You can now use ${yellow}cobra-text${green} command.${reset}"
+if mv cobra-text "$system/cobra-text"; then
+    chmod +x "$system/cobra-text"
+    echo -e "${white}[${green}+${white}] ${green}Cobra-Text successfully installed to $system.${reset}"
 else
-    echo -e "${white}[${red}✖${white}] ${red}Installation failed. Please check permissions and try again.${reset}"
+    echo -e "${white}[${red}✖${white}] ${red}Failed to move cobra-text. Ensure it is in the current directory.${reset}"
+    exit 1
+fi
+sleep 3
+if command -v cobra-text &>/dev/null; then
+    echo -e "${white}[${green}+${white}] ${green}Installation complete! You can now use the ${yellow}cobra-text${green} command.${reset}"
+else
+    echo -e "${white}[${red}✖${white}] ${red}Installation failed. Please verify your permissions and try again.${reset}"
     exit 1
 fi
