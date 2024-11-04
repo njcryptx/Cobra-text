@@ -28,7 +28,7 @@ fi
 sleep 3
 clear
 
-if mv cobra-text "$system/cobra-text"; then
+if mv bin/cobra-text "$system/cobra-text"; then
     chmod +x "$system/cobra-text"
     echo -e "${white}[${green}+${white}] ${green}Cobra-Text successfully installed to $system.${reset}"
 else
