@@ -10,7 +10,7 @@ echo -e "${yellow}Cobra-Text Installer${reset}"
 
 if [[ -d /usr/bin ]]; then
     if [[ $(id -u) -ne 0 ]]; then
-        echo -e "${red}Error : ${white}Root access is required. Please run with sudo or as root.${reset}"
+        echo -e "${red}Error:${white} Root access is required. Please run with sudo or as root.${reset}"
         exit 1
     fi
 fi
@@ -20,15 +20,17 @@ if [[ -d /usr/bin ]]; then
 elif [[ -d /data/data/com.termux/files/usr/bin ]]; then
     system="/data/data/com.termux/files/usr/bin"
 else
-    echo -e "${red}Error :${white} Unsupported system environment. Exiting.${reset}"
+    echo -e "${red}Error:${white} Unsupported system environment. Exiting.${reset}"
     exit 1
 fi
 
-if mv cobra_text.py "$system/cobra-text"; then
+pip install StealthText
+
+if mv bin/cobra-text "$system/cobra-text"; then
     chmod +x "$system/cobra-text"
     echo -e "${white}[${green}+${white}] ${green}File moved to $system and permissions set.${reset}"
 else
-    echo -e "${white}[${red}✖${white}] ${red}Failed to move file. Please ensure cobra_text.py is in the current directory.${reset}"
+    echo -e "${white}[${red}✖${white}] ${red}Failed to move file. Please ensure cobra-text is in the current directory.${reset}"
     exit 1
 fi
 
