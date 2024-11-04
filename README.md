@@ -33,7 +33,7 @@ cobra-Text -h
 To encrypt a message, use the `--encrypt` option followed by the message and the password:
 
 ```bash
-cobra-text --encrypt "Hello, world!" --password "your_password"
+cobra-text --encrypt "Hello, world!" --password "12345678"
 ```
 
 #### Decrypt a Message
@@ -41,7 +41,7 @@ cobra-text --encrypt "Hello, world!" --password "your_password"
 To decrypt a message, use the `--decrypt` option followed by the encrypted message and the password:
 
 ```bash
-cobra-Text --decrypt "your_encrypted_message_here" --password "your_password"
+cobra-Text --decrypt "A8GHr_qczkHEyxMpTxS2PaRCCsLaqKLXNNRos-aUBz1AtPQw8-JJohIGHg-e" --password "12345678"
 ```
 
 ## Notes
@@ -57,20 +57,20 @@ Here's a full example of how to use Cobra-Text:
 **Encrypt a message:**
 
 ```sh
-cobra-text --encrypt "This is a secret message." --password "my_secret_password"
+cobra-text --encrypt "Hello, world!" --password "12345678"
 ```
 
 Output:  
-`Encrypted Message: [Base64 encoded string]`
+`Encrypted Message: A8GHr_qczkHEyxMpTxS2PaRCCsLaqKLXNNRos-aUBz1AtPQw8-JJohIGHg-e`
 
 **Decrypt the message:**
 
 ```bash
-cobra-text --decrypt "[Base64 encoded string]" --password "my_secret_password"
+cobra-Text --decrypt "A8GHr_qczkHEyxMpTxS2PaRCCsLaqKLXNNRos-aUBz1AtPQw8-JJohIGHg-e" --password "12345678"
 ```
 
 Output:  
-`Decrypted Message : This is a secret message.`
+`Decrypted Message : Hello, world!.`
 
 ## Security Recommendations
 
